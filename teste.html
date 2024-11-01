@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compte à rebours Fortnite</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('background.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+        }
+        .title {
+            font-size: 2em;
+            margin-top: 20px;
+        }
+        .progress-container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: rgba(51, 51, 51, 0.8);
+            border-radius: 25px;
+        }
+        .progress-bar {
+            height: 20px;
+            border-radius: 25px;
+            background-color: #7d4eff;
+            width: 0%; /* Initialisé à 0% */
+        }
+        .countdown {
+            font-size: 3em;
+            color: #ffeb3b;
+            margin: 20px 0;
+        }
+        .date-info {
+            font-size: 1.2em;
+            background-color: rgba(27, 27, 27, 0.7);
+            padding: 10px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title">Quand se termine Fortnite Chapitre 5 Saison 4 ?</div>
+    <div>La saison 4 est <span id="completion">0%</span> terminée. Il reste <span id="days-remaining">0</span> jours.</div>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <div class="countdown" id="countdown">00 : 00 : 00</div>
+
+    <div class="date-info">
+        La saison 4 de Fortnite se termine le <b>Samedi 2 Novembre, 2024</b>.<br>
+        La saison OG 2 commence le <b>Samedi 2 Novembre, 2024</b>.
+    </div>
+
+    <script>
+        // Définir la date de début et de fin de la saison
+        const startDate = new Date("August 16, 2024 00:00:00").getTime(); // Date de début de la saison
+        const endDate = new Date("November 2, 2024 23:20:00").getTime(); // Date de fin de la saison
+
+        // Mettre à jour le compte à rebours et le pourcentage toutes les secondes
+        const countdownFunction = setInterval(() => {
+            const now = new Date().getTime();
+            const totalDuration = endDate - startDate;
+            const timeElapsed = now - startDate;
+            const timeRemaining = endDate - now;
+
+            // Calculer le pourcentage de progression
+            let progressPercentage = Math.min((timeElapsed / totalDuration) * 100, 100).toFixed(2);
+
+            // Afficher le pourcentage et mettre à jour la largeur de la barre de progression
+            document.getElementById("completion").innerText = `${progressPercentage}%`;
+            document.getElementById("progress-bar").style.width = `${progressPercentage}%`;
+
+            // Calculer les jours, heures, minutes et secondes restantes
+            const daysRemaining = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+            // Afficher le compte à rebours
+            document.getElementById("countdown").innerText = `${hours} : ${minutes} : ${seconds}`;
+            document.getElementById("days-remaining").innerText = daysRemaining;
+
+            // Vérifier si la date de fin est passée
+            if (timeRemaining < 0) {
+                clearInterval(countdownFunction);
+                document.getElementById("countdown").innerText = "L'événement fortnite a commencer";
+                document.getElementById("completion").innerText = "100%";
+                document.getElementById("progress-bar").style.width = "100%";
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
